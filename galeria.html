@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Galeria de pódios, campeonatos e momentos da equipe Toca do Lobo Jiu-Jitsu — GFTeam Aroeira, em Macaé.">
+  <meta name="theme-color" content="#080808">
+  <title>Galeria | Toca do Lobo Jiu-Jitsu</title>
+  <link rel="icon" href="logo-principal.jpeg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="galeria.css">
+</head>
+<body class="gallery-page">
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header scrolled">
+    <a class="brand" href="index.html" aria-label="Voltar ao início">
+      <img src="logo-principal.jpeg" alt="Logo Junior Lobo Jiu-Jitsu Black Wolf" width="54" height="54">
+      <span><strong>TOCA DO LOBO</strong><small>JIU-JITSU · GFTEAM AROEIRA</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false">☰</button>
+    <nav class="nav" id="menu" aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="index.html#professor">Professor</a>
+      <a href="index.html#horarios">Horários</a>
+      <a href="galeria.html" aria-current="page">Galeria</a>
+      <a href="index.html#localizacao">Localização</a>
+      <a class="nav-cta" href="https://wa.me/5522981646698?text=%5BSITE%3AAULA_EXPERIMENTAL%5D%20Ol%C3%A1%21%20Quero%20agendar%20uma%20aula%20experimental." target="_blank" rel="noopener">Agendar aula</a>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <section class="gallery-hero">
+      <div class="container">
+        <p class="eyebrow">HISTÓRIA, SUPERAÇÃO E EQUIPE</p>
+        <h1>NOSSAS <span>CONQUISTAS</span></h1>
+        <p>Pódios do professor Junior Lobo, momentos de competição e registros da família Toca do Lobo.</p>
+      </div>
+    </section>
+
+    <section class="gallery-library section">
+      <div class="container">
+        <div class="gallery-toolbar" aria-label="Filtros da galeria">
+          <button class="filter-btn active" data-filter="todos" type="button">Todas</button>
+          <button class="filter-btn" data-filter="podios" type="button">Pódios</button>
+          <button class="filter-btn" data-filter="competicoes" type="button">Competições</button>
+          <button class="filter-btn" data-filter="equipe" type="button">Equipe</button>
+        </div>
+        <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
+        <div class="full-gallery-grid" id="full-gallery-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="trial-banner">
+      <div class="container trial-content">
+        <div><p class="eyebrow">FAÇA PARTE DESSA HISTÓRIA</p><h2>VENHA TREINAR<br>COM A NOSSA EQUIPE</h2></div>
+        <a class="btn btn-light" href="https://wa.me/5522981646698?text=%5BSITE%3AAULA_EXPERIMENTAL%5D%20Ol%C3%A1%21%20Quero%20agendar%20uma%20aula%20experimental." target="_blank" rel="noopener">Agendar aula grátis</a>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container footer-grid"><div class="brand footer-brand"><img src="logo-principal.jpeg" alt="Logo Toca do Lobo" width="54" height="54"><span><strong>TOCA DO LOBO</strong><small>JIU-JITSU · GFTEAM AROEIRA</small></span></div><div class="footer-links"><a href="index.html">Início</a><a href="https://www.instagram.com/gfteamaroeira/" target="_blank" rel="noopener">Instagram</a></div></div></footer>
+
+  <dialog class="gallery-lightbox" aria-label="Foto ampliada">
+    <button class="lightbox-close" type="button" aria-label="Fechar">×</button>
+    <button class="lightbox-prev" type="button" aria-label="Foto anterior">‹</button>
+    <img alt="">
+    <button class="lightbox-next" type="button" aria-label="Próxima foto">›</button>
+    <p></p>
+  </dialog>
+  <script src="script.js"></script>
+  <script src="galeria.js"></script>
+</body>
+</html>

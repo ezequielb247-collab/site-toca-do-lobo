@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: site-toca-do-lobo
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
