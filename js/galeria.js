@@ -11,27 +11,36 @@ const labels = { podios: 'Pódios', competicoes: 'Competições', equipe: 'Equip
 
 async function loadGallery() {
   try {
-    const staticResponse = await fetch('galeria-data.json', { cache: 'no-store' });
-    if (!staticResponse.ok) throw new Error('Falha ao carregar galeria');
-    const staticPhotos = await staticResponse.json();
+    const apiResponse = await fetch('https://painel.tocadolobojiujitsu.com.br/api/public/gallery', { cache: 'no-store' });
 
-    let managedPhotos = [];
-    try {
-      const apiResponse = await fetch('https://painel.tocadolobojiujitsu.com.br/api/public/gallery', { cache: 'no-store' });
-      if (apiResponse.ok) {
-        const apiData = await apiResponse.json();
-        managedPhotos = Array.isArray(apiData.photos) ? apiData.photos : [];
-      }
-    } catch (apiError) {
-      console.warn('Galeria administrável temporariamente indisponível.', apiError);
+    if (!apiResponse.ok) {
+      throw new Error(`API da galeria respondeu com status ${apiResponse.status}`);
     }
 
-    const importedLegacySources = new Set(managedPhotos.map(photo => photo.legacySrc).filter(Boolean));
-    const remainingStaticPhotos = staticPhotos.filter(photo => !importedLegacySources.has(photo.src));
-    photos = [...managedPhotos.filter(photo => photo.destaque), ...remainingStaticPhotos, ...managedPhotos.filter(photo => !photo.destaque)];
+    const apiData = await apiResponse.json();
+    const managedPhotos = Array.isArray(apiData.photos) ? apiData.photos : [];
+
+    // Depois que a galeria passou a ser administrada pelo painel, a API é a
+    // fonte oficial. Assim, fotos excluídas não reaparecem pelo JSON antigo.
+    photos = [
+      ...managedPhotos.filter(photo => photo.destaque),
+      ...managedPhotos.filter(photo => !photo.destaque)
+    ];
+
     renderGallery('todos');
-  } catch (error) {
-    grid.innerHTML = '<p>Não foi possível carregar as fotos agora.</p>';
+  } catch (apiError) {
+    console.warn('Galeria administrável indisponível; usando cópia de segurança.', apiError);
+
+    try {
+      const staticResponse = await fetch('galeria-data.json', { cache: 'no-store' });
+      if (!staticResponse.ok) throw new Error('Falha ao carregar galeria de segurança');
+      photos = await staticResponse.json();
+      renderGallery('todos');
+    } catch (fallbackError) {
+      console.error(fallbackError);
+      grid.innerHTML = '<p>Não foi possível carregar as fotos agora.</p>';
+      count.textContent = '';
+    }
   }
 }
 
