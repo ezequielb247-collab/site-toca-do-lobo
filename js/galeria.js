@@ -11,9 +11,22 @@ const labels = { podios: 'Pódios', competicoes: 'Competições', equipe: 'Equip
 
 async function loadGallery() {
   try {
-    const response = await fetch('galeria-data.json', { cache: 'no-store' });
-    if (!response.ok) throw new Error('Falha ao carregar galeria');
-    photos = await response.json();
+    const staticResponse = await fetch('galeria-data.json', { cache: 'no-store' });
+    if (!staticResponse.ok) throw new Error('Falha ao carregar galeria');
+    const staticPhotos = await staticResponse.json();
+
+    let managedPhotos = [];
+    try {
+      const apiResponse = await fetch('https://painel.tocadolobojiujitsu.com.br/api/public/gallery', { cache: 'no-store' });
+      if (apiResponse.ok) {
+        const apiData = await apiResponse.json();
+        managedPhotos = Array.isArray(apiData.photos) ? apiData.photos : [];
+      }
+    } catch (apiError) {
+      console.warn('Galeria administrável temporariamente indisponível.', apiError);
+    }
+
+    photos = [...managedPhotos.filter(photo => photo.destaque), ...staticPhotos, ...managedPhotos.filter(photo => !photo.destaque)];
     renderGallery('todos');
   } catch (error) {
     grid.innerHTML = '<p>Não foi possível carregar as fotos agora.</p>';
