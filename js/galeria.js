@@ -26,7 +26,9 @@ async function loadGallery() {
       console.warn('Galeria administrável temporariamente indisponível.', apiError);
     }
 
-    photos = [...managedPhotos.filter(photo => photo.destaque), ...staticPhotos, ...managedPhotos.filter(photo => !photo.destaque)];
+    const importedLegacySources = new Set(managedPhotos.map(photo => photo.legacySrc).filter(Boolean));
+    const remainingStaticPhotos = staticPhotos.filter(photo => !importedLegacySources.has(photo.src));
+    photos = [...managedPhotos.filter(photo => photo.destaque), ...remainingStaticPhotos, ...managedPhotos.filter(photo => !photo.destaque)];
     renderGallery('todos');
   } catch (error) {
     grid.innerHTML = '<p>Não foi possível carregar as fotos agora.</p>';
